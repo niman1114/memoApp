@@ -9,7 +9,8 @@ const App = () => {
   const [inputContent, setInputContent] = useState('');
   const [editingId, setEditingId] = useState(null);  // 編集中のメモのインデックス
   
-  const titleInputRef = useRef(null);  // 追加：input要素への参照を作成
+  const titleInputRef = useRef(null);  // 追加：input要素への参照
+  const memoInputRef = useRef(null);  // 追加：memo-input div への参照
   
   const handleAddMemo = () => {
     if (!inputTitle.trim() && !inputContent.trim()) return;
@@ -61,6 +62,13 @@ const App = () => {
     setEditingId(null);
     setInputTitle('');
     setInputContent('');
+    titleInputRef.current?.focus();
+    
+    // スマートフォンでの自動スクロール
+    memoInputRef.current?.scrollIntoView({ 
+      behavior: 'smooth',
+      block: 'start'
+    });
   };
 
   return (
@@ -89,8 +97,9 @@ const App = () => {
             </div>
           ))}
         </div>
-        <div className="memo-input">
+        <div className="memo-input" ref={memoInputRef}>
           <input 
+            ref={titleInputRef}
             type="text" 
             placeholder="タイトルを入力" 
             value={inputTitle}
