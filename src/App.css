@@ -89,6 +89,22 @@
   color: #3E7B27;
 }
 
+.memo-item.editing {
+  border: 2px solid #3E7B27;
+  box-shadow: 0 0 8px rgba(62, 123, 39, 0.5);
+  position: relative;
+  padding-left: 20px;  /* 左側のマーカー用のスペース */
+}
+
+.memo-item.editing::before {
+  content: "▶";
+  position: absolute;
+  left: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #3E7B27;
+}
+
 /* スマホ向けレイアウト */
 @media (max-width: 768px) {
   .app-container {
@@ -137,5 +153,11 @@
   input, textarea {
     font-size: 16px;  /* iOSでズームインを防ぐ */
     padding: 8px;
+  }
+
+  .memo-item.editing {
+    background-color: #e6d5aa;  /* より明確な背景色の変更 */
+    transform: scale(1.02);     /* わずかに大きく表示 */
+    transition: all 0.2s ease;  /* アニメーション効果 */
   }
 }
