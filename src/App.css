@@ -1,8 +1,9 @@
 .app-container {
   display: flex;
-  height: 100vh;
-  padding: 10px;
   gap: 20px;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .memo-list {
@@ -53,11 +54,6 @@
   border-radius: 4px;
 }
 
-.memo-item.editing {
-  border: 2px solid #4CAF50;
-  box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
-}
-
 .button-group {
   display: flex;
   gap: 10px;
@@ -86,4 +82,55 @@
 
 .new-memo-button:hover {
   background-color: #45a049;
+}
+
+/* スマホ向けレイアウト */
+@media (max-width: 768px) {
+  .app-container {
+    flex-direction: column-reverse;
+    padding: 10px;
+  }
+
+  .memo-list {
+    width: 100%;
+  }
+
+  .memo-input {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .memo-input textarea {
+    min-height: 100px;
+  }
+
+  .button-group {
+    display: flex;
+    gap: 10px;
+  }
+
+  .button-group button {
+    flex: 1;
+    white-space: nowrap;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+    margin: 10px 0;
+  }
+
+  .memo-item {
+    padding: 12px;
+    margin-bottom: 12px;
+  }
+
+  .memo-item h3 {
+    font-size: 1.1rem;
+    margin: 0 0 8px 0;
+  }
+
+  input, textarea {
+    font-size: 16px;  /* iOSでズームインを防ぐ */
+    padding: 8px;
+  }
 }
