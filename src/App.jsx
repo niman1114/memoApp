@@ -13,7 +13,15 @@ const App = () => {
   
   const handleAddMemo = () => {
     if (!inputTitle.trim() && !inputContent.trim()) return;
-    setMemos([...memos, { title: inputTitle, content: inputContent }]);
+    setMemos([
+      ...memos, 
+      { 
+        title: inputTitle, 
+        content: inputContent,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      }
+    ]);
     setInputTitle('');
     setInputContent('');
   };
@@ -28,7 +36,12 @@ const App = () => {
   const handleUpdateMemo = () => {
     if (!inputTitle.trim() && !inputContent.trim()) return;
     const updatedMemos = [...memos];
-    updatedMemos[editingId] = { title: inputTitle, content: inputContent };
+    updatedMemos[editingId] = { 
+      ...updatedMemos[editingId],
+      title: inputTitle, 
+      content: inputContent,
+      updatedAt: new Date().toISOString()
+    };
     setMemos(updatedMemos);
     setInputTitle('');
     setInputContent('');
@@ -48,7 +61,6 @@ const App = () => {
     setEditingId(null);
     setInputTitle('');
     setInputContent('');
-    titleInputRef.current?.focus();  // 追加：タイトル入力欄にフォーカスを移動
   };
 
   return (
@@ -61,18 +73,24 @@ const App = () => {
           {memos.map((memo, index) => (
             <div 
               key={index} 
-              className="memo-item"
+              className={`memo-item ${editingId === index ? 'editing' : ''}`}
               onClick={() => handleEditMemo(index)}
               style={{ cursor: 'pointer' }}
             >
               <h3>{memo.title}</h3>
               <p>{memo.content}</p>
+              <div className="memo-date">
+                <small>
+                  作成: {new Date(memo.createdAt).toLocaleString('ja-JP')}
+                  {memo.updatedAt !== memo.createdAt && 
+                    ` / 更新: ${new Date(memo.updatedAt).toLocaleString('ja-JP')}`}
+                </small>
+              </div>
             </div>
           ))}
         </div>
         <div className="memo-input">
           <input 
-            ref={titleInputRef}  // 追加：参照を設定
             type="text" 
             placeholder="タイトルを入力" 
             value={inputTitle}
